@@ -152,8 +152,12 @@ public class StudentMedicalRecordDaoImpl implements StudentMedicalRecordDao {
             String sql = queryConstants.getInsertMedicalRecord();
             try (PreparedStatement stmt = con.prepareStatement(sql)) {
                 stmt.setLong(1, medicalRecords.getStudentId());
-                stmt.setNull(2, Types.INTEGER);
-                stmt.setNull(3, Types.INTEGER);
+                stmt.setLong(2, medicalRecords.getAilmentId());
+                if (medicalRecords.getMedHistoryId() != null) {
+                    stmt.setLong(3, medicalRecords.getMedHistoryId());
+                } else {
+                    stmt.setNull(3, Types.INTEGER);
+                }
                 stmt.setLong(4, medicalRecords.getNurseInChargeId());
                 stmt.setString(5, medicalRecords.getSymptoms());
                 stmt.setString(6, medicalRecords.getTemperatureReadings());
